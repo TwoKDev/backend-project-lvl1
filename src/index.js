@@ -3,12 +3,14 @@ import readlineSync from 'readline-sync';
 // Games
 import makeBrainEvenGame from './games/brain-even.js';
 import makeBrainCalcGame from './games/brain-calc.js';
+import makeBrainGCDGame from './games/brain-gcd.js';
 
 const NUMBER_OF_ROUNDS = 3;
 
 const GameEnum = {
   BRAIN_EVEN: 'brain-even',
   BRAIN_CALC: 'brain-calc',
+  BRAIN_GCD: 'brain-gcd',
 };
 
 const greeting = (username) => console.log(`Hello, ${username}`);
@@ -68,6 +70,10 @@ const makeGame = (gameName, numberOfRounds) => {
 
     case GameEnum.BRAIN_CALC: {
       return makeGameEngine(makeBrainCalcGame(numberOfRounds));
+    }
+
+    case GameEnum.BRAIN_GCD: {
+      return makeGameEngine(makeBrainGCDGame(numberOfRounds));
     }
 
     default: {

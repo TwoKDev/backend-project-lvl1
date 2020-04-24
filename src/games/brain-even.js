@@ -23,7 +23,7 @@ const makeQuestion = () => (
 const makeBrainEvenGameInfo = (numberOfRounds) => {
   const description = `Answer "${AnswerEnum.YES}" if the number is even, otherwise answer "${AnswerEnum.NO}".`;
   const questions = Array(numberOfRounds).fill(null).map(makeQuestion);
-  console.log(questions);
+
   return {
     description,
     questions,
