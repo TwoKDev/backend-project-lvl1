@@ -7,8 +7,11 @@ start:
 lint:
 	npx eslint .
 
-publish:
+publish-test:
 	npm publish --dry-run
+
+publish:
+	npm publish --access public
 
 link:
 	npm link
