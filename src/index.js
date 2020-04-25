@@ -1,12 +1,12 @@
 import readlineSync from 'readline-sync';
 
 // Games
-import makeBrainEvenGame from './games/brain-even.js';
-import makeBrainCalcGame from './games/brain-calc.js';
-import makeBrainGCDGame from './games/brain-gcd.js';
-import makeBrainProgressionGame from './games/brain-progression.js';
+import makeBrainEvenGameData from './games/brain-even.js';
+import makeBrainCalcGameData from './games/brain-calc.js';
+import makeBrainGCDGameData from './games/brain-gcd.js';
+import makeBrainProgressionGameData from './games/brain-progression.js';
 
-const NUMBER_OF_ROUNDS = 3;
+const GAME_NUMBER_OF_ROUNDS = 3;
 
 const GameEnum = {
   BRAIN_EVEN: 'brain-even',
@@ -15,78 +15,74 @@ const GameEnum = {
   BRAIN_PROGRESSION: 'brain-progression',
 };
 
-const greeting = (username) => console.log(`Hello, ${username}`);
+const gameDict = {
+  [GameEnum.BRAIN_EVEN]: makeBrainEvenGameData,
+  [GameEnum.BRAIN_CALC]: makeBrainCalcGameData,
+  [GameEnum.BRAIN_GCD]: makeBrainGCDGameData,
+  [GameEnum.BRAIN_PROGRESSION]: makeBrainProgressionGameData,
+};
 
-const requestUsername = () => readlineSync.question('May I have your name? ');
-const requestUserAnswer = () => readlineSync.question('Your answer: ');
 const printQuestion = (question) => console.log(`Question: ${question}`);
-
+const requestUserAnswer = () => readlineSync.question('Your answer: ');
 const getSuccessAnswerMessage = () => 'Correct!';
 const getFailureAnswerMessage = (userAnswer, correctAnswer) => (
   `"${userAnswer}" is wrong answer ;(. Correct answer was "${correctAnswer}".`
 );
 
-const getSuccessEndGame = (username) => `Congratulations, ${username}!`;
-const getFailureEndMessage = (username) => `Let's try again, ${username}!`;
+const startRoundGame = (round) => {
+  const [question, correctAnswer] = round;
 
-const makeGameEngine = (game) => {
-  const {
-    description,
-    questions,
-    getCorrectAnswer,
-  } = game;
+  printQuestion(question);
+  const userAnswer = requestUserAnswer();
 
-  const startGame = () => {
+  const isCorrectUserAnswer = userAnswer === correctAnswer;
+  const responseMessage = isCorrectUserAnswer
+    ? getSuccessAnswerMessage()
+    : getFailureAnswerMessage(userAnswer, correctAnswer);
+
+  console.log(responseMessage);
+
+  return isCorrectUserAnswer;
+};
+
+const makeGameEngine = (description, rounds, startRound = startRoundGame) => {
+  const startGameLoop = () => {
     console.log(description);
 
-    const isWin = questions.reduce((acc, question) => {
-      if (!acc) {
-        return false;
-      }
+    const roundIter = (isCorrectPrevUserAnswer, round) => (
+      isCorrectPrevUserAnswer
+        ? startRound(round)
+        : false
+    );
 
-      printQuestion(question);
-      const userAnswer = requestUserAnswer();
-      const correctAnswer = getCorrectAnswer(question);
+    const isSuccessEndGame = rounds.reduce(roundIter, true);
 
-      const isCorrectUserAnswer = correctAnswer === userAnswer;
-      const message = isCorrectUserAnswer
-        ? getSuccessAnswerMessage()
-        : getFailureAnswerMessage(userAnswer, correctAnswer);
-
-      console.log(message);
-
-      return isCorrectUserAnswer;
-    }, true);
-
-    return isWin;
+    return isSuccessEndGame;
   };
 
-  return startGame;
+  return startGameLoop;
 };
 
 const makeGame = (gameName, numberOfRounds) => {
-  switch (gameName) {
-    case GameEnum.BRAIN_EVEN: {
-      return makeGameEngine(makeBrainEvenGame(numberOfRounds));
-    }
+  const makeGameData = gameDict[gameName];
 
-    case GameEnum.BRAIN_CALC: {
-      return makeGameEngine(makeBrainCalcGame(numberOfRounds));
-    }
-
-    case GameEnum.BRAIN_GCD: {
-      return makeGameEngine(makeBrainGCDGame(numberOfRounds));
-    }
-
-    case GameEnum.BRAIN_PROGRESSION: {
-      return makeGameEngine(makeBrainProgressionGame(numberOfRounds));
-    }
-
-    default: {
-      throw new Error(`Game "${gameName}" does not exist.`);
-    }
+  if (makeGameData === undefined) {
+    throw new Error(`Game "${gameName}" does not exist.`);
   }
+
+  const {
+    description,
+    rounds,
+  } = makeGameData(numberOfRounds);
+
+  return makeGameEngine(description, rounds);
 };
+
+
+const greeting = (username) => console.log(`Hello, ${username}`);
+const requestUsername = () => readlineSync.question('May I have your name? ');
+const getSuccessEndGameMessage = (username) => `Congratulations, ${username}!`;
+const getFailureEndGameMessage = (username) => `Let's try again, ${username}!`;
 
 const startGame = (gameName) => {
   console.log('Welcome to the Brain Games!');
@@ -94,13 +90,13 @@ const startGame = (gameName) => {
   const username = requestUsername();
   greeting(username);
 
-  const game = makeGame(gameName, NUMBER_OF_ROUNDS);
+  const runGame = makeGame(gameName, GAME_NUMBER_OF_ROUNDS);
 
-  const isSuccessEndGame = game();
+  const isSuccessEndGame = runGame();
 
   const endGameMessage = isSuccessEndGame
-    ? getSuccessEndGame(username)
-    : getFailureEndMessage(username);
+    ? getSuccessEndGameMessage(username)
+    : getFailureEndGameMessage(username);
 
   console.log(endGameMessage);
 };

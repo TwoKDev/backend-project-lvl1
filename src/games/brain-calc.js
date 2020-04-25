@@ -1,6 +1,7 @@
 // Helpers
 import getRandomNumber from '../helpers/getRandomNumber.js';
-import makeArray from '../helpers/makeArray.js';
+import makeGameData from '../helpers/makeGameData.js';
+import makeGameRound from '../helpers/makeGameRound.js';
 
 const OperatorEnum = {
   ADD: '+',
@@ -55,7 +56,7 @@ const getCorrectAnswer = (question) => {
   ).toString();
 };
 
-const makeQuestion = () => {
+const makeBrainCalcQuestion = () => {
   const leftOperand = getRandomNumber(QUESTION_MIN_NUMBER, QUESTION_MAX_NUMBER);
   const rightOperand = getRandomNumber(QUESTION_MIN_NUMBER, QUESTION_MAX_NUMBER);
   const operator = getRandomOperator();
@@ -63,10 +64,17 @@ const makeQuestion = () => {
   return `${leftOperand} ${operator} ${rightOperand}`;
 };
 
-const makeBrainCalcGame = (numberOfRounds) => ({
-  description: GAME_DESCRIPTION,
-  questions: makeArray(numberOfRounds).map(makeQuestion),
-  getCorrectAnswer,
-});
+const makeBrainCalcGameRound = () => {
+  const question = makeBrainCalcQuestion();
+  const correctAnswer = getCorrectAnswer(question);
 
-export default makeBrainCalcGame;
+  return makeGameRound(question, correctAnswer);
+};
+
+const makeBrainCalcGameData = (numberOfRounds) => makeGameData(
+  GAME_DESCRIPTION,
+  numberOfRounds,
+  makeBrainCalcGameRound,
+);
+
+export default makeBrainCalcGameData;

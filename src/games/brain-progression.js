@@ -1,6 +1,8 @@
 // Helpers
 import getRandomNumber from '../helpers/getRandomNumber.js';
 import makeArray from '../helpers/makeArray.js';
+import makeGameRound from '../helpers/makeGameRound.js';
+import makeGameData from '../helpers/makeGameData.js';
 
 const GAME_DESCRIPTION = 'What number is missing in the progression?';
 
@@ -47,7 +49,7 @@ const getCorrectAnswer = (question) => {
   return progressionIterator.toString();
 };
 
-const makeQuestion = () => {
+const makeBrainProgressionQuestion = () => {
   const progressionStartNumber = getRandomNumber(
     PROGRESSION_MIN_START_NUMBER,
     PROGRESSION_MAX_START_NUMBER,
@@ -68,10 +70,17 @@ const makeQuestion = () => {
   return question;
 };
 
-const makeBrainProgressionGame = (numberOfRounds) => ({
-  description: GAME_DESCRIPTION,
-  questions: makeArray(numberOfRounds).map(makeQuestion),
-  getCorrectAnswer,
-});
+const makeBrainProgressionGameRound = () => {
+  const question = makeBrainProgressionQuestion();
+  const correctAnswer = getCorrectAnswer(question);
 
-export default makeBrainProgressionGame;
+  return makeGameRound(question, correctAnswer);
+};
+
+const makeBrainProgressionGameData = (numberOfRounds) => makeGameData(
+  GAME_DESCRIPTION,
+  numberOfRounds,
+  makeBrainProgressionGameRound,
+);
+
+export default makeBrainProgressionGameData;

@@ -1,7 +1,8 @@
 // Helpers
 import isEvenNumber from '../helpers/isEven.js';
 import getRandomNumber from '../helpers/getRandomNumber.js';
-import makeArray from '../helpers/makeArray.js';
+import makeGameData from '../helpers/makeGameData.js';
+import makeGameRound from '../helpers/makeGameRound.js';
 
 const AnswerEnum = {
   YES: 'yes',
@@ -19,14 +20,21 @@ const getCorrectAnswer = (question) => (
     : AnswerEnum.NO
 );
 
-const makeQuestion = () => (
+const makeBrainEvenQuestion = () => (
   getRandomNumber(QUESTION_MIN_NUMBER, QUESTION_MAX_NUMBER)
 );
 
-const makeBrainEvenGameInfo = (numberOfRounds) => ({
-  description: GAME_DESCRIPTION,
-  questions: makeArray(numberOfRounds).map(makeQuestion),
-  getCorrectAnswer,
-});
+const makeBrainCalcGameRound = () => {
+  const question = makeBrainEvenQuestion();
+  const correctAnswer = getCorrectAnswer(question);
 
-export default makeBrainEvenGameInfo;
+  return makeGameRound(question, correctAnswer);
+};
+
+const makeBrainEvenGameData = (numberOfRounds) => makeGameData(
+  GAME_DESCRIPTION,
+  numberOfRounds,
+  makeBrainCalcGameRound,
+);
+
+export default makeBrainEvenGameData;
