@@ -1,7 +1,7 @@
 # backend-project-lvl1
 
 [![Node CI](https://github.com/NLIDie/backend-project-lvl1/workflows/Node%20CI/badge.svg)](https://github.com/NLIDie/backend-project-lvl1/actions)
-[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/NLIDie/backend-project-lvl1)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d9a18a533b384c3093d4/maintainability)](https://codeclimate.com/github/NLIDie/backend-project-lvl1/maintainability)
 
 ## Install package
 
