@@ -1,6 +1,6 @@
 import readlineSync from 'readline-sync';
 
-import makeGame from './factories/game-factory';
+import makeGame from './factories/game-factory.js';
 
 const greeting = (username) => console.log(`Hello, ${username}`);
 

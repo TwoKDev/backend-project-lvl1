@@ -1,5 +1,5 @@
 // Core
-import makeGameEngine from '../core/game-engine';
+import makeGameEngine from '../core/game-engine.js';
 
 // Games
 import makeBrainEvenGameData from '../games/brain-even.js';
