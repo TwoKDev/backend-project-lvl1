@@ -1,5 +1,6 @@
 // Helpers
 import getRandomNumber from '../helpers/getRandomNumber.js';
+import makeArray from '../helpers/makeArray.js';
 
 const OperatorEnum = {
   ADD: '+',
@@ -12,6 +13,8 @@ const OPERATORS = [
   OperatorEnum.SUBTRACT,
   OperatorEnum.MULTIPLY,
 ];
+
+const GAME_DESCRIPTION = 'What is the result of the expression?';
 
 const QUESTION_MIN_NUMBER = 0;
 const QUESTION_MAX_NUMBER = 100;
@@ -60,15 +63,10 @@ const makeQuestion = () => {
   return `${leftOperand} ${operator} ${rightOperand}`;
 };
 
-const makeBrainCalcGame = (countRound) => {
-  const description = 'What is the result of the expression?';
-  const questions = Array(countRound).fill(null).map(makeQuestion);
-
-  return {
-    description,
-    questions,
-    getCorrectAnswer,
-  };
-};
+const makeBrainCalcGame = (numberOfRounds) => ({
+  description: GAME_DESCRIPTION,
+  questions: makeArray(numberOfRounds).map(makeQuestion),
+  getCorrectAnswer,
+});
 
 export default makeBrainCalcGame;

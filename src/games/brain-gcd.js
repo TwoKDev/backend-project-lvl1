@@ -1,5 +1,8 @@
 // Helpers
 import getRandomNumber from '../helpers/getRandomNumber.js';
+import makeArray from '../helpers/makeArray.js';
+
+const GAME_DESCRIPTION = 'Find the greatest common divisor of given numbers.';
 
 const QUESTION_MIN_NUMBER = 0;
 const QUESTION_MAX_NUMBER = 100;
@@ -43,15 +46,10 @@ const makeQuestion = () => {
   return `${firstNumber} ${secondNumber}`;
 };
 
-const makeBrainGCDGame = (numberOfRounds) => {
-  const description = 'Find the greatest common divisor of given numbers.';
-  const questions = Array(numberOfRounds).fill(null).map(makeQuestion);
-
-  return {
-    description,
-    questions,
-    getCorrectAnswer,
-  };
-};
+const makeBrainGCDGame = (numberOfRounds) => ({
+  description: GAME_DESCRIPTION,
+  questions: makeArray(numberOfRounds).map(makeQuestion),
+  getCorrectAnswer,
+});
 
 export default makeBrainGCDGame;
