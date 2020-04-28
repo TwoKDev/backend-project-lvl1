@@ -1,7 +1,5 @@
 // Helpers
-import getRandomNumber from '../helpers/getRandomNumber.js';
-import makeGameData from '../helpers/makeGameData.js';
-import makeGameRound from '../helpers/makeGameRound.js';
+import utils from '../utils/index.js';
 
 const GAME_DESCRIPTION = 'Find the greatest common divisor of given numbers.';
 
@@ -41,8 +39,8 @@ const getCorrectAnswer = (question) => {
 };
 
 const makeBrainGCDQuestion = () => {
-  const firstNumber = getRandomNumber(QUESTION_MIN_NUMBER, QUESTION_MAX_NUMBER);
-  const secondNumber = getRandomNumber(QUESTION_MIN_NUMBER, QUESTION_MAX_NUMBER);
+  const firstNumber = utils.getRandomNumber(QUESTION_MIN_NUMBER, QUESTION_MAX_NUMBER);
+  const secondNumber = utils.getRandomNumber(QUESTION_MIN_NUMBER, QUESTION_MAX_NUMBER);
 
   return `${firstNumber} ${secondNumber}`;
 };
@@ -51,10 +49,10 @@ const makeBrainGCDGameRound = () => {
   const question = makeBrainGCDQuestion();
   const correctAnswer = getCorrectAnswer(question);
 
-  return makeGameRound(question, correctAnswer);
+  return utils.makeGameRound(question, correctAnswer);
 };
 
-const makeBrainGCDGameData = (numberOfRounds) => makeGameData(
+const makeBrainGCDGameData = (numberOfRounds) => utils.makeGameData(
   GAME_DESCRIPTION,
   numberOfRounds,
   makeBrainGCDGameRound,

@@ -1,30 +1,33 @@
 import readlineSync from 'readline-sync';
 
-import makeGame from './factories/game-factory.js';
-
-const greeting = (username) => console.log(`Hello, ${username}`);
-
-const requestUsername = () => readlineSync.question('May I have your name? ');
-
-const getSuccessEndGameMessage = (username) => `Congratulations, ${username}!`;
-
-const getFailureEndGameMessage = (username) => `Let's try again, ${username}!`;
+import makeGame, { GAME_ENUM } from './factories/game-factory.js';
 
 const startGame = (gameName) => {
   console.log('Welcome to the Brain Games!');
 
-  const username = requestUsername();
-  greeting(username);
+  const username = readlineSync.question('May I have your name? ');
+  console.log(`Hello, ${username}`);
 
   const runGame = makeGame(gameName);
-
   const isSuccessEndGame = runGame();
 
   const endGameMessage = isSuccessEndGame
-    ? getSuccessEndGameMessage(username)
-    : getFailureEndGameMessage(username);
+    ? `Congratulations, ${username}!`
+    : `Let's try again, ${username}!`;
 
   console.log(endGameMessage);
 };
 
-export default startGame;
+const startBrainCalcGame = () => startGame(GAME_ENUM.brainCalc);
+const startBrainEvenGame = () => startGame(GAME_ENUM.brainEven);
+const startBrainGCDGame = () => startGame(GAME_ENUM.brainGCD);
+const startBrainPrimeGame = () => startGame(GAME_ENUM.brainPrime);
+const startBrainProgressionGame = () => startGame(GAME_ENUM.brainProgression);
+
+export default {
+  startBrainCalcGame,
+  startBrainEvenGame,
+  startBrainGCDGame,
+  startBrainPrimeGame,
+  startBrainProgressionGame,
+};

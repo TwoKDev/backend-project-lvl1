@@ -1,8 +1,5 @@
 // Helpers
-import getRandomNumber from '../helpers/getRandomNumber.js';
-import makeArray from '../helpers/makeArray.js';
-import makeGameRound from '../helpers/makeGameRound.js';
-import makeGameData from '../helpers/makeGameData.js';
+import utils from '../utils/index.js';
 
 const GAME_DESCRIPTION = 'What number is missing in the progression?';
 
@@ -17,7 +14,7 @@ const PROGRESSION_MAX_ITERATOR = 100;
 const SYMBOL_TO_REPLACE = '..';
 
 const hideRandomElement = (arr, symbolToReplace = SYMBOL_TO_REPLACE) => {
-  const hiddenNumberIndex = getRandomNumber(0, arr.length - 1);
+  const hiddenNumberIndex = utils.getRandomNumber(0, arr.length - 1);
 
   return arr.map((num, index) => {
     if (index === hiddenNumberIndex) {
@@ -29,7 +26,7 @@ const hideRandomElement = (arr, symbolToReplace = SYMBOL_TO_REPLACE) => {
 };
 
 const makeProgression = (start, iterator, size) => (
-  makeArray(size, start).map((num, index) => num + (iterator * index))
+  utils.makeArray(size, start).map((num, index) => num + (iterator * index))
 );
 
 const getCorrectAnswer = (question) => {
@@ -50,12 +47,12 @@ const getCorrectAnswer = (question) => {
 };
 
 const makeBrainProgressionQuestion = () => {
-  const progressionStartNumber = getRandomNumber(
+  const progressionStartNumber = utils.getRandomNumber(
     PROGRESSION_MIN_START_NUMBER,
     PROGRESSION_MAX_START_NUMBER,
   );
 
-  const progressionIterator = getRandomNumber(
+  const progressionIterator = utils.getRandomNumber(
     PROGRESSION_MIN_ITERATOR,
     PROGRESSION_MAX_ITERATOR,
   );
@@ -74,10 +71,10 @@ const makeBrainProgressionGameRound = () => {
   const question = makeBrainProgressionQuestion();
   const correctAnswer = getCorrectAnswer(question);
 
-  return makeGameRound(question, correctAnswer);
+  return utils.makeGameRound(question, correctAnswer);
 };
 
-const makeBrainProgressionGameData = (numberOfRounds) => makeGameData(
+const makeBrainProgressionGameData = (numberOfRounds) => utils.makeGameData(
   GAME_DESCRIPTION,
   numberOfRounds,
   makeBrainProgressionGameRound,

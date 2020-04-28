@@ -1,14 +1,12 @@
 // Helpers
-import getRandomNumber from '../helpers/getRandomNumber.js';
-import makeGameData from '../helpers/makeGameData.js';
-import makeGameRound from '../helpers/makeGameRound.js';
+import utils from '../utils/index.js';
 
-const AnswerEnum = {
-  YES: 'yes',
-  NO: 'no',
+const ANSWER_ENUM = {
+  yes: 'yes',
+  no: 'no',
 };
 
-const GAME_DESCRIPTION = `Answer "${AnswerEnum.YES}" if given number is prime. Otherwise answer "${AnswerEnum.NO}".`;
+const GAME_DESCRIPTION = `Answer "${ANSWER_ENUM.yes}" if given number is prime. Otherwise answer "${ANSWER_ENUM.no}".`;
 
 const MIN_NUMBER = 2;
 const MAX_NUMBER = 200;
@@ -29,19 +27,19 @@ const isPrime = (num) => {
 
 const getCorrectAnswer = (question) => (
   isPrime(Number(question))
-    ? AnswerEnum.YES
-    : AnswerEnum.NO
+    ? ANSWER_ENUM.yes
+    : ANSWER_ENUM.no
 );
-const makeBrainPrimeQuestion = () => getRandomNumber(MIN_NUMBER, MAX_NUMBER);
+const makeBrainPrimeQuestion = () => utils.getRandomNumber(MIN_NUMBER, MAX_NUMBER);
 
 const makeBrainPrimeGameRound = () => {
   const question = makeBrainPrimeQuestion();
   const correctAnswer = getCorrectAnswer(question);
 
-  return makeGameRound(question, correctAnswer);
+  return utils.makeGameRound(question, correctAnswer);
 };
 
-const makeBrainPrimeGameData = (numberOfRounds) => makeGameData(
+const makeBrainPrimeGameData = (numberOfRounds) => utils.makeGameData(
   GAME_DESCRIPTION,
   numberOfRounds,
   makeBrainPrimeGameRound,
