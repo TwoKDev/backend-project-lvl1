@@ -10,24 +10,24 @@ import makeBrainPrimeGameData from '../games/brain-prime.js';
 
 const GAME_NUMBER_OF_ROUNDS = 3;
 
-const GameEnum = {
-  BRAIN_EVEN: 'brain-even',
-  BRAIN_CALC: 'brain-calc',
-  BRAIN_GCD: 'brain-gcd',
-  BRAIN_PROGRESSION: 'brain-progression',
-  BRAIN_PRIME: 'brain-prime',
+export const GAME_ENUM = {
+  brainEven: 'brain-even',
+  brainCalc: 'brain-calc',
+  brainGCD: 'brain-gcd',
+  brainProgression: 'brain-progression',
+  brainPrime: 'brain-prime',
 };
 
-const gameDict = {
-  [GameEnum.BRAIN_EVEN]: makeBrainEvenGameData,
-  [GameEnum.BRAIN_CALC]: makeBrainCalcGameData,
-  [GameEnum.BRAIN_GCD]: makeBrainGCDGameData,
-  [GameEnum.BRAIN_PROGRESSION]: makeBrainProgressionGameData,
-  [GameEnum.BRAIN_PRIME]: makeBrainPrimeGameData,
+const GAME_DICT = {
+  [GAME_ENUM.brainEven]: makeBrainEvenGameData,
+  [GAME_ENUM.brainCalc]: makeBrainCalcGameData,
+  [GAME_ENUM.brainGCD]: makeBrainGCDGameData,
+  [GAME_ENUM.brainProgression]: makeBrainProgressionGameData,
+  [GAME_ENUM.brainPrime]: makeBrainPrimeGameData,
 };
 
 const makeGame = (gameName, numberOfRounds = GAME_NUMBER_OF_ROUNDS) => {
-  const makeGameData = gameDict[gameName];
+  const makeGameData = GAME_DICT[gameName];
 
   if (makeGameData === undefined) {
     throw new Error(`Game "${gameName}" does not exist.`);
