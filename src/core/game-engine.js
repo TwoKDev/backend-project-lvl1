@@ -1,42 +1,36 @@
 import readlineSync from 'readline-sync';
 
-const printQuestion = (question) => console.log(`Question: ${question}`);
-
-const requestUserAnswer = () => readlineSync.question('Your answer: ');
-
-const getSuccessAnswerMessage = () => 'Correct!';
-
-const getFailureAnswerMessage = (userAnswer, correctAnswer) => (
-  `"${userAnswer}" is wrong answer ;(. Correct answer was "${correctAnswer}".`
-);
-
 const playRoundGame = (round) => {
   const [question, correctAnswer] = round;
 
-  printQuestion(question);
-  const userAnswer = requestUserAnswer();
+  console.log(`Question: ${question}`);
+
+  const userAnswer = readlineSync.question('Your answer: ');
 
   const isCorrectUserAnswer = userAnswer === correctAnswer;
   const responseMessage = isCorrectUserAnswer
-    ? getSuccessAnswerMessage()
-    : getFailureAnswerMessage(userAnswer, correctAnswer);
+    ? 'Correct!'
+    : `"${userAnswer}" is wrong answer ;(. Correct answer was "${correctAnswer}".`;
 
   console.log(responseMessage);
 
   return isCorrectUserAnswer;
 };
 
-const makeGameEngine = (description, rounds, playRound = playRoundGame) => {
+const makeGameEngine = (description, rounds) => {
   const startGameLoop = () => {
     console.log(description);
 
-    const roundIter = (isCorrectPrevUserAnswer, round) => (
-      isCorrectPrevUserAnswer
-        ? playRound(round)
-        : false
-    );
+    const isSuccessEndGame = rounds.reduce(
+      (isCorrectPrevUserAnswer, round) => {
+        if (!isCorrectPrevUserAnswer) {
+          return false;
+        }
 
-    const isSuccessEndGame = rounds.reduce(roundIter, true);
+        return playRoundGame(round);
+      },
+      true,
+    );
 
     return isSuccessEndGame;
   };
