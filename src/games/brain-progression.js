@@ -1,13 +1,11 @@
 // Helpers
 import utils from '../utils/index.js';
+import makeGameEngine from '../core/game-engine.js';
 
-const GAME_DESCRIPTION = 'What number is missing in the progression?';
-
+const DESCRIPTION = 'What number is missing in the progression?';
 const PROGRESSION_SIZE = 10;
-
 const PROGRESSION_MIN_START_NUMBER = 0;
 const PROGRESSION_MAX_START_NUMBER = 100;
-
 const PROGRESSION_MIN_ITERATOR = 2;
 const PROGRESSION_MAX_ITERATOR = 100;
 
@@ -46,7 +44,7 @@ const getCorrectAnswer = (question) => {
   return progressionIterator.toString();
 };
 
-const makeBrainProgressionQuestion = () => {
+const makeQuestion = () => {
   const progressionStartNumber = utils.getRandomNumber(
     PROGRESSION_MIN_START_NUMBER,
     PROGRESSION_MAX_START_NUMBER,
@@ -67,17 +65,18 @@ const makeBrainProgressionQuestion = () => {
   return question;
 };
 
-const makeBrainProgressionGameRound = () => {
-  const question = makeBrainProgressionQuestion();
+const makeRound = () => {
+  const question = makeQuestion();
   const correctAnswer = getCorrectAnswer(question);
 
   return utils.makeGameRound(question, correctAnswer);
 };
 
-const makeBrainProgressionGameData = (numberOfRounds) => utils.makeGameData(
-  GAME_DESCRIPTION,
-  numberOfRounds,
-  makeBrainProgressionGameRound,
-);
+const startBrainProgressionGameData = () => {
+  const rounds = utils.makeGameRounds(makeRound);
 
-export default makeBrainProgressionGameData;
+  const startGame = makeGameEngine(DESCRIPTION, rounds);
+  startGame();
+};
+
+export default startBrainProgressionGameData;

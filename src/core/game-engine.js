@@ -1,6 +1,6 @@
 import readlineSync from 'readline-sync';
 
-const playRoundGame = (round) => {
+const playRound = (round) => {
   const [question, correctAnswer] = round;
 
   console.log(`Question: ${question}`);
@@ -19,6 +19,11 @@ const playRoundGame = (round) => {
 
 const makeGameEngine = (description, rounds) => {
   const startGameLoop = () => {
+    console.log('Welcome to the Brain Games!');
+
+    const username = readlineSync.question('May I have your name? ');
+    console.log(`Hello, ${username}`);
+
     console.log(description);
 
     const isSuccessEndGame = rounds.reduce(
@@ -27,12 +32,16 @@ const makeGameEngine = (description, rounds) => {
           return false;
         }
 
-        return playRoundGame(round);
+        return playRound(round);
       },
       true,
     );
 
-    return isSuccessEndGame;
+    const endGameMessage = isSuccessEndGame
+      ? `Congratulations, ${username}!`
+      : `Let's try again, ${username}!`;
+
+    console.log(endGameMessage);
   };
 
   return startGameLoop;

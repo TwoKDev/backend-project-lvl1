@@ -4,16 +4,15 @@ const getRandomNumber = (min, max) => (
 
 const makeArray = (size, fillValue = null) => Array(size).fill(fillValue);
 
-const makeGameData = (description, numberOfRounds, makeGameRound) => ({
-  description,
-  rounds: makeArray(numberOfRounds).map(makeGameRound),
-});
+const makeGameRounds = (makeGameRound, numberOfRounds = 3) => (
+  makeArray(numberOfRounds).map(makeGameRound)
+);
 
 const makeGameRound = (question, correctAnswer) => [question, correctAnswer];
 
 export default {
   getRandomNumber,
   makeArray,
-  makeGameData,
   makeGameRound,
+  makeGameRounds,
 };

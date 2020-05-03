@@ -1,16 +1,13 @@
 // Helpers
 import utils from '../utils/index.js';
+import makeGameEngine from '../core/game-engine.js';
 
+const DESCRIPTION = 'What is the result of the expression?';
 const OPERATOR_ENUM = {
   add: '+',
   subtract: '-',
   multiply: '*',
 };
-
-const GAME_DESCRIPTION = 'What is the result of the expression?';
-
-const QUESTION_MIN_NUMBER = 0;
-const QUESTION_MAX_NUMBER = 100;
 
 const getRandomOperator = () => {
   const operators = Object.values(OPERATOR_ENUM);
@@ -49,25 +46,29 @@ const getCorrectAnswer = (question) => {
   ).toString();
 };
 
-const makeBrainCalcQuestion = () => {
-  const leftOperand = utils.getRandomNumber(QUESTION_MIN_NUMBER, QUESTION_MAX_NUMBER);
-  const rightOperand = utils.getRandomNumber(QUESTION_MIN_NUMBER, QUESTION_MAX_NUMBER);
+const makeQuestion = () => {
+  const questionMin = 0;
+  const questionMax = 300;
+
+  const leftOperand = utils.getRandomNumber(questionMin, questionMax);
+  const rightOperand = utils.getRandomNumber(questionMin, questionMax);
   const operator = getRandomOperator();
 
   return `${leftOperand} ${operator} ${rightOperand}`;
 };
 
-const makeBrainCalcGameRound = () => {
-  const question = makeBrainCalcQuestion();
+const makeRound = () => {
+  const question = makeQuestion();
   const correctAnswer = getCorrectAnswer(question);
 
   return utils.makeGameRound(question, correctAnswer);
 };
 
-const makeBrainCalcGameData = (numberOfRounds) => utils.makeGameData(
-  GAME_DESCRIPTION,
-  numberOfRounds,
-  makeBrainCalcGameRound,
-);
+const startBrainCalcGameData = () => {
+  const rounds = utils.makeGameRounds(makeRound);
 
-export default makeBrainCalcGameData;
+  const startGame = makeGameEngine(DESCRIPTION, rounds);
+  startGame();
+};
+
+export default startBrainCalcGameData;
