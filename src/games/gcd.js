@@ -1,6 +1,6 @@
 // Helpers
 import utils from '../utils.js';
-import startGame from '../game-engine.js';
+import startGame from '../engine.js';
 
 const getGCD = (...nums) => {
   const minNumber = Math.min(...nums);
