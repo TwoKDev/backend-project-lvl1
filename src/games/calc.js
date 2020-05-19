@@ -1,24 +1,17 @@
-// Helpers
 import utils from '../utils.js';
-import startGame from '../engine.js';
-
-const OPERATOR_ENUM = {
-  add: '+',
-  subtract: '-',
-  multiply: '*',
-};
+import playGame from '../engine.js';
 
 const calc = (num1, num2, operator) => {
   switch (operator) {
-    case OPERATOR_ENUM.add: {
+    case '+': {
       return num1 + num2;
     }
 
-    case OPERATOR_ENUM.subtract: {
+    case '-': {
       return num1 - num2;
     }
 
-    case OPERATOR_ENUM.multiply: {
+    case '*': {
       return num1 * num2;
     }
 
@@ -29,7 +22,7 @@ const calc = (num1, num2, operator) => {
 };
 
 const getRandomOperator = () => {
-  const operators = Object.values(OPERATOR_ENUM);
+  const operators = ['+', '-', '*'];
   const randomIndex = utils.getRandomNumber(0, operators.length - 1);
 
   return operators[randomIndex];
@@ -46,10 +39,4 @@ const makeRound = () => {
   return [question, correctAnswer];
 };
 
-const startCalcGame = () => {
-  const description = 'What is the result of the expression?';
-
-  startGame(description, makeRound);
-};
-
-export default startCalcGame;
+export default () => playGame('What is the result of the expression?', makeRound);

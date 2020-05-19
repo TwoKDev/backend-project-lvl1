@@ -1,6 +1,5 @@
-// Helpers
 import utils from '../utils.js';
-import startGame from '../engine.js';
+import playGame from '../engine.js';
 
 const hideElementByIndex = (arr, index, symbolToReplace) => {
   const result = [...arr];
@@ -30,10 +29,4 @@ const makeRound = () => {
   return [question, correctAnswer];
 };
 
-const startProgressionGame = () => {
-  const description = 'What number is missing in the progression?';
-
-  startGame(description, makeRound);
-};
-
-export default startProgressionGame;
+export default () => playGame('What number is missing in the progression?', makeRound);
