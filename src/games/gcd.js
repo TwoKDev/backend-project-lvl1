@@ -1,6 +1,8 @@
 import utils from '../utils.js';
 import playGame from '../engine.js';
 
+const GAME_RULE = 'Find the greatest common divisor of given numbers.';
+
 const getGCD = (...nums) => {
   const minNumber = Math.min(...nums);
 
@@ -36,4 +38,4 @@ const makeRound = () => {
   return [question, correctAnswer];
 };
 
-export default () => playGame('Find the greatest common divisor of given numbers.', makeRound);
+export default () => playGame(GAME_RULE, makeRound);

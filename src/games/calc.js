@@ -1,6 +1,8 @@
 import utils from '../utils.js';
 import playGame from '../engine.js';
 
+const GAME_RULE = 'What is the result of the expression?';
+
 const calc = (num1, num2, operator) => {
   switch (operator) {
     case '+': {
@@ -39,4 +41,4 @@ const makeRound = () => {
   return [question, correctAnswer];
 };
 
-export default () => playGame('What is the result of the expression?', makeRound);
+export default () => playGame(GAME_RULE, makeRound);

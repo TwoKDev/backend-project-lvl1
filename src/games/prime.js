@@ -1,6 +1,8 @@
 import utils from '../utils.js';
 import playGame from '../engine.js';
 
+const GAME_RULE = 'Answer "yes" if given number is prime. Otherwise answer "no".';
+
 const isPrime = (num) => {
   if (num < 2) {
     return false;
@@ -22,4 +24,4 @@ const makeRound = () => {
   return [question, correctAnswer];
 };
 
-export default () => playGame('Answer "yes" if given number is prime. Otherwise answer "no".', makeRound);
+export default () => playGame(GAME_RULE, makeRound);
