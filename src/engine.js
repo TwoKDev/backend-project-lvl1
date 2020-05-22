@@ -23,20 +23,16 @@ const playGame = (description, makeRound) => {
   console.log(description);
 
   const maxRoundsCount = 3;
-  let currentRound = 1;
-  let isLosing = false;
-  while (currentRound <= maxRoundsCount && !isLosing) {
+  for (let currentRound = 1; currentRound <= maxRoundsCount; currentRound += 1) {
     const isSuccessfulRound = playRound(makeRound());
 
-    isLosing = !isSuccessfulRound;
-    currentRound += 1;
+    if (!isSuccessfulRound) {
+      console.log(`Let's try again, ${username}!`);
+      return;
+    }
   }
 
-  const endGameMessage = !isLosing
-    ? `Congratulations, ${username}!`
-    : `Let's try again, ${username}!`;
-
-  console.log(endGameMessage);
+  console.log(`Congratulations, ${username}!`);
 };
 
 export default playGame;
